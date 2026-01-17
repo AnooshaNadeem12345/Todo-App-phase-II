@@ -1,0 +1,142 @@
+# API Contract: Task Management
+
+## Base URL
+`/api/tasks`
+
+## Authentication
+All endpoints except authentication endpoints require a valid JWT token in the Authorization header:
+```
+Authorization: Bearer {token}
+```
+
+## Endpoints
+
+### GET /api/tasks
+Retrieve all tasks for the authenticated user.
+
+**Response (200 OK)**:
+```json
+{
+  "tasks": [
+    {
+      "id": "string",
+      "title": "string",
+      "description": "string",
+      "completed": "boolean",
+      "dueDate": "string (ISO 8601)",
+      "createdAt": "string (ISO 8601)",
+      "updatedAt": "string (ISO 8601)"
+    }
+  ]
+}
+```
+
+### POST /api/tasks
+Create a new task for the authenticated user.
+
+**Request Body**:
+```json
+{
+  "title": "string (required)",
+  "description": "string (optional)",
+  "dueDate": "string (ISO 8601, optional)"
+}
+```
+
+**Response (201 Created)**:
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "completed": "boolean",
+  "dueDate": "string (ISO 8601)",
+  "createdAt": "string (ISO 8601)",
+  "updatedAt": "string (ISO 8601)"
+}
+```
+
+**Response (400 Bad Request)**:
+```json
+{
+  "error": "string"
+}
+```
+
+### GET /api/tasks/{id}
+Retrieve a specific task by ID for the authenticated user.
+
+**Path Parameters**:
+- id: Task ID (string)
+
+**Response (200 OK)**:
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "completed": "boolean",
+  "dueDate": "string (ISO 8601)",
+  "createdAt": "string (ISO 8601)",
+  "updatedAt": "string (ISO 8601)"
+}
+```
+
+**Response (404 Not Found)**:
+```json
+{
+  "error": "Task not found"
+}
+```
+
+### PUT /api/tasks/{id}
+Update a specific task by ID for the authenticated user.
+
+**Path Parameters**:
+- id: Task ID (string)
+
+**Request Body**:
+```json
+{
+  "title": "string (optional)",
+  "description": "string (optional)",
+  "completed": "boolean (optional)",
+  "dueDate": "string (ISO 8601, optional)"
+}
+```
+
+**Response (200 OK)**:
+```json
+{
+  "id": "string",
+  "title": "string",
+  "description": "string",
+  "completed": "boolean",
+  "dueDate": "string (ISO 8601)",
+  "createdAt": "string (ISO 8601)",
+  "updatedAt": "string (ISO 8601)"
+}
+```
+
+**Response (404 Not Found)**:
+```json
+{
+  "error": "Task not found"
+}
+```
+
+### DELETE /api/tasks/{id}
+Delete a specific task by ID for the authenticated user.
+
+**Path Parameters**:
+- id: Task ID (string)
+
+**Response (204 No Content)**:
+- Task successfully deleted
+
+**Response (404 Not Found)**:
+```json
+{
+  "error": "Task not found"
+}
+```
